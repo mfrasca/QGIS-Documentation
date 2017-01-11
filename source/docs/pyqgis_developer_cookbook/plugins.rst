@@ -370,7 +370,6 @@ You can see that in :func:`initGui()` we've used an icon from the resource file
 
 It is good to use a prefix that will not collide with other plugins or any
 parts of QGIS, otherwise you might get resources you did not want. Now you
-just need to generate a Python file that will contain the resources. It's
 done with :command:`pyrcc4` command:
 
 ::
@@ -450,20 +449,25 @@ plugin directory.
 .........
 
 First you should create a ``.pro`` file, that is a *project* file that can be
-managed by Qt Linguist.
+managed by **Qt Linguist**.
 
 In this ``.pro`` file you have to specify all the files and forms you want to
 translate. This file is used to set up the localization files and variables.
 An example of the pro file is::
 
-  FORMS = ../ui/*
+  FORMS = ../form.ui
 
   SOURCES = ../your_plugin.py
 
   TRANSLATIONS = your_plugin_it.ts
 
-In this particular case all your UIs are placed in the ``../ui`` folder and you
-want to translate all of them.
+This is how it would look like if you follow the structure of our example pblugin as desribed in 13.1.1.
+Your plugin might follow a more complex structure, and it might be distributed across several files.
+The program you will use to read the ``.pro`` file does not expand wild card characters, so you need to place every file explicitly in the ``.pro`` file.
+
+A different example, in which all your UIs are placed in the ``../ui`` folder, could hold dhe definition::
+
+  FORMS = ../ui/about.ui ../ui/feedback.ui ../ui/main_dialog.ui
 
 Furthermore, the ``your_plugin.py`` file is the file that *calls* all the menu
 and sub-menus of your plugin in the QGIS toolbar and you want to translate them
@@ -486,7 +490,7 @@ of the language(s) of your plugin.
 
 Open a terminal, go to ``your_plugin/i18n`` directory and type::
 
-  lupdate your_plugin.pro
+  pylupdate4 your_plugin.pro
 
 you should see the ``your_plugin_language.ts`` file(s).
 
